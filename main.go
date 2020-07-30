@@ -11,16 +11,17 @@ import (
 	"strings"
 	"time"
 
-	reportParse "./battlereportparsing"
-	"github.com/gorilla/mux" // http router used
-	"github.com/joho/godotenv"
+	reportParse "backends/battlereportparsing"
+
+	"./vendor/github.com/gorilla/mux" // http router used
+	"./vendor/github.com/joho/godotenv"
 
 	// for .env variables compatability
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"./vendor/go.mongodb.org/mongo-driver/bson"
+	"./vendor/go.mongodb.org/mongo-driver/bson/primitive"
+	"./vendor/go.mongodb.org/mongo-driver/mongo"
+	"./vendor/go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // SubmitRequest - The information recieved when revieving a post submit request.

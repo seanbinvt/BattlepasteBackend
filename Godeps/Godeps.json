@@ -1,9 +1,340 @@
 {
-	"ImportPath": ".",
+	"ImportPath": "GoServer/backend",
 	"GoVersion": "go1.14",
 	"GodepVersion": "v80",
 	"Packages": [
 		"./..."
 	],
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/awserr",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/awsutil",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/client/metadata",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/credentials",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/endpoints",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/request",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/signer/v4",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/ini",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/sdkio",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/sdkmath",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/shareddefaults",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/strings",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/sync/singleflight",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/rest",
+			"Comment": "v1.25.13-300-gf5a1d903d",
+			"Rev": "f5a1d903d474ca4be8aed6db6fee49deb0041c3d"
+		},
+		{
+			"ImportPath": "github.com/go-stack/stack",
+			"Comment": "v1.8.0",
+			"Rev": "2fee6af1a9795aafbe0253a0cfbdf668e1fb8a9a"
+		},
+		{
+			"ImportPath": "github.com/golang/snappy",
+			"Comment": "v0.0.1-9-g196ae77",
+			"Rev": "196ae77b8a26000fa30caa8b2b541e09674dbc43"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.7.4-2-g98cb6bf",
+			"Rev": "98cb6bf42e086f6af920b965c38cacc07402d51b"
+		},
+		{
+			"ImportPath": "github.com/jmespath/go-jmespath",
+			"Comment": "v0.3.0-2-g2437e84",
+			"Rev": "2437e8417af5203cd4f1f97f99fc289bdeea1360"
+		},
+		{
+			"ImportPath": "github.com/joho/godotenv",
+			"Comment": "v1.3.0-14-gd6ee687",
+			"Rev": "d6ee6871f21dd95e76563a90f522ce9fe75443f8"
+		},
+		{
+			"ImportPath": "github.com/klauspost/compress/fse",
+			"Comment": "v1.10.10-3-gf5e4a2e",
+			"Rev": "f5e4a2eee1f810676bb1ff51d12c096e121a1172"
+		},
+		{
+			"ImportPath": "github.com/klauspost/compress/huff0",
+			"Comment": "v1.10.10-3-gf5e4a2e",
+			"Rev": "f5e4a2eee1f810676bb1ff51d12c096e121a1172"
+		},
+		{
+			"ImportPath": "github.com/klauspost/compress/snappy",
+			"Comment": "v1.10.10-3-gf5e4a2e",
+			"Rev": "f5e4a2eee1f810676bb1ff51d12c096e121a1172"
+		},
+		{
+			"ImportPath": "github.com/klauspost/compress/zstd",
+			"Comment": "v1.10.10-3-gf5e4a2e",
+			"Rev": "f5e4a2eee1f810676bb1ff51d12c096e121a1172"
+		},
+		{
+			"ImportPath": "github.com/klauspost/compress/zstd/internal/xxhash",
+			"Comment": "v1.10.10-3-gf5e4a2e",
+			"Rev": "f5e4a2eee1f810676bb1ff51d12c096e121a1172"
+		},
+		{
+			"ImportPath": "github.com/pkg/errors",
+			"Comment": "v0.9.1",
+			"Rev": "614d223910a179a466c1767a985424175c39b465"
+		},
+		{
+			"ImportPath": "github.com/xdg/scram",
+			"Rev": "7eeb5667e42c09cb51bf7b7c28aea8c56767da90"
+		},
+		{
+			"ImportPath": "github.com/xdg/stringprep",
+			"Comment": "v1.0.0-1-g73f8eec",
+			"Rev": "73f8eece6fdcd902c185bf651de50f3828bed5ed"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/bson",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/bson/bsoncodec",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/bson/bsonoptions",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/bson/bsonrw",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/bson/bsontype",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/bson/primitive",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/event",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/internal",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/mongo",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/mongo/options",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/mongo/readconcern",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/mongo/readpref",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/mongo/writeconcern",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/tag",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/version",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/bsonx",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/bsonx/bsoncore",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/address",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/auth",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/auth/internal/gssapi",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/connstring",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/description",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/dns",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/mongocrypt",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/mongocrypt/options",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/ocsp",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/operation",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/session",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/topology",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/uuid",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "go.mongodb.org/mongo-driver/x/mongo/driver/wiremessage",
+			"Comment": "v1.4.0-beta2-55-ga8b8f62c",
+			"Rev": "a8b8f62c130771f1d0edf3e5bbe73df71a3f4c56"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/ocsp",
+			"Rev": "123391ffb6de907695e1066dc40c1ff09322aeb6"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/pbkdf2",
+			"Rev": "123391ffb6de907695e1066dc40c1ff09322aeb6"
+		},
+		{
+			"ImportPath": "golang.org/x/sync/errgroup",
+			"Rev": "6e8e738ad208923de99951fe0b48239bfd864f28"
+		},
+		{
+			"ImportPath": "golang.org/x/sync/semaphore",
+			"Rev": "6e8e738ad208923de99951fe0b48239bfd864f28"
+		},
+		{
+			"ImportPath": "golang.org/x/text/transform",
+			"Comment": "v0.3.3",
+			"Rev": "23ae387dee1f90d29a23c0e87ee0b46038fbed0e"
+		},
+		{
+			"ImportPath": "golang.org/x/text/unicode/norm",
+			"Comment": "v0.3.3",
+			"Rev": "23ae387dee1f90d29a23c0e87ee0b46038fbed0e"
+		}
+	]
 }
