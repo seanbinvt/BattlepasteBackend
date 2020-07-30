@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	reportParse "backends/battlereportparsing"
+	reportParse "./vendor/battlereportparsing"
 
 	"./vendor/github.com/gorilla/mux" // http router used
 	"./vendor/github.com/joho/godotenv"
