@@ -68,7 +68,7 @@ func handler() {
 	r.HandleFunc("/battlereport/{server}/{reportID}", viewBattleReport).Methods(http.MethodGet)
 	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods(http.MethodPost)
 	r.HandleFunc("/battlereport/search", searchBattleReport).Methods(http.MethodPost)
-	log.Fatal(http.ListenAndServe(":8080", r)) // If error then log to console
+	log.Fatal(http.ListenAndServe(":3000", r)) // If error then log to console
 }
 
 //https://www.mongodb.com/blog/post/quick-start-golang--mongodb--modeling-documents-with-go-data-structures
