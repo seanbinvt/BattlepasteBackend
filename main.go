@@ -64,16 +64,13 @@ func main() {
 var db *mongo.Database
 
 func handler() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
+	port := os.Getenv("PORT")
 
 	r := mux.NewRouter()
 	r.HandleFunc("/battlereport/{server}/{reportID}", viewBattleReport).Methods(http.MethodGet)
 	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods(http.MethodPost)
 	r.HandleFunc("/battlereport/search", searchBattleReport).Methods(http.MethodPost)
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), r)) // If error then log to console
+	log.Fatal(http.ListenAndServe(":"+port, r)) // If error then log to console
 }
 
 //https://www.mongodb.com/blog/post/quick-start-golang--mongodb--modeling-documents-with-go-data-structures
