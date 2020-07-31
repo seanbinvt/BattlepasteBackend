@@ -43,6 +43,8 @@ type SearchRequest struct {
 	MinTotalLoss uint   `json:"minTotalLoss"`
 }
 
+const urlReact = "https://seanb.herokuapp.com/"
+
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -128,6 +130,7 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resObj, _ := json.Marshal(reportsSorted)
+	w.Header().Set("Access-Control-Allow-Origin", urlReact)
 	w.Write(resObj)
 }
 
@@ -149,6 +152,7 @@ func viewBattleReport(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resObj, _ := json.Marshal(report)
+	w.Header().Set("Access-Control-Allow-Origin", urlReact)
 	w.Write(resObj)
 }
 
@@ -186,5 +190,6 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 	resObj, _ := json.Marshal(res)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", urlReact)
 	w.Write(resObj)
 }
