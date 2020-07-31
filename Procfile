@@ -1,2 +1,2 @@
-web = bin/main
+web: bin/main
 
