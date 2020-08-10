@@ -63,9 +63,9 @@ func handler() {
 	port := os.Getenv("PORT")
 
 	r := mux.NewRouter()
-	r.HandleFunc("/battlereport/{server}/{reportID}", viewBattleReport).Methods(http.MethodGet, http.MethodOptions)
-	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods(http.MethodPost, http.MethodOptions)
-	r.HandleFunc("/battlereport/search", searchBattleReport).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/battlereport/{server}/{reportID}", viewBattleReport).Methods("GET", "OPTIONS")
+	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods("POST", "OPTIONS")
+	r.HandleFunc("/battlereport/search", searchBattleReport).Methods("POST", "OPTIONS")
 	log.Fatal(http.ListenAndServe(":"+port, r)) // If error then log to console
 }
 
@@ -76,10 +76,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchBattleReport(w http.ResponseWriter, r *http.Request) {
-	if (*r).Method == "OPTIONS" {
-		allowOpts(&w)
-		return
-	}
+	allowOpts(&w)
 
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -129,11 +126,12 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resObj, _ := json.Marshal(reportsSorted)
-	allowOpts(&w)
 	w.Write(resObj)
 }
 
 func viewBattleReport(w http.ResponseWriter, r *http.Request) {
+	allowOpts(&w)
+
 	vars := mux.Vars(r)
 
 	server := vars["server"]
@@ -151,11 +149,12 @@ func viewBattleReport(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resObj, _ := json.Marshal(report)
-	allowOpts(&w)
 	w.Write(resObj)
 }
 
 func submitBattleReport(w http.ResponseWriter, r *http.Request) {
+	allowOpts(&w)
+
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil {
@@ -189,12 +188,11 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 	resObj, _ := json.Marshal(res)
 
 	w.Header().Set("Content-Type", "application/json")
-	allowOpts(&w)
 	w.Write(resObj)
 }
 
 func allowOpts(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
     (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-    (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+    (*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
