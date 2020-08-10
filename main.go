@@ -65,7 +65,7 @@ func handler() {
 	r := mux.NewRouter()
 	r.HandleFunc("/battlereport/{server}/{reportID}", viewBattleReport).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods(http.MethodPost, http.MethodOptions)
-	r.HandleFunc("/battlereport/search", searchBattleReport).Methods(http.Methodpost, http.MethodOptions)
+	r.HandleFunc("/battlereport/search", searchBattleReport).Methods(http.MethodPost, http.MethodOptions)
 	log.Fatal(http.ListenAndServe(":"+port, r)) // If error then log to console
 }
 
