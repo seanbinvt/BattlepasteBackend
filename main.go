@@ -80,9 +80,7 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 
 	if (*r).Method == "OPTIONS" {
 		fmt.Println("here")
-        return
-    }
-
+    } else {
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil {
@@ -132,6 +130,7 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 
 	resObj, _ := json.Marshal(reportsSorted)
 	w.Write(resObj)
+	}
 }
 
 func viewBattleReport(w http.ResponseWriter, r *http.Request) {
