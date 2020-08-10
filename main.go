@@ -77,6 +77,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 	allowOpts(&w)
+	fmt.Println((*r).Method)
 
 	if (*r).Method == "OPTIONS" {
 		fmt.Println("here")
