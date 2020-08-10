@@ -79,6 +79,7 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 	allowOpts(&w)
 
 	if (*r).Method == "OPTIONS" {
+		fmt.Println("here")
         return
     }
 
@@ -196,7 +197,7 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 }
 
 func allowOpts(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	(*w).Header().Set("Access-Control-Allow-Origin", "https://seanb.herokuapp.com")
+    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
     (*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
