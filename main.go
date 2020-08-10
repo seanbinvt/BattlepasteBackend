@@ -63,9 +63,9 @@ func handler() {
 	port := os.Getenv("PORT")
 
 	r := mux.NewRouter()
-	r.HandleFunc("/battlereport/{server}/{reportID}", viewBattleReport).Methods(http.MethodGet)
-	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods(http.MethodOptions)
-	r.HandleFunc("/battlereport/search", searchBattleReport).Methods(http.MethodOptions)
+	r.HandleFunc("/battlereport/{server}/{reportID}", viewBattleReport).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/battlereport/search", searchBattleReport).Methods(http.Methodpost, http.MethodOptions)
 	log.Fatal(http.ListenAndServe(":"+port, r)) // If error then log to console
 }
 
@@ -76,6 +76,11 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchBattleReport(w http.ResponseWriter, r *http.Request) {
+	if (*req).Method == "OPTIONS" {
+		allowOpts(&w)
+		return
+	}
+
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil {
