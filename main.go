@@ -81,56 +81,57 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		w.WriteHeader(http.StatusOK)
-    } else {
-	b, err := ioutil.ReadAll(r.Body)
-	defer r.Body.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var searchReq SearchRequest
-	err = json.Unmarshal(b, &searchReq)
-	if err != nil {
-		fmt.Println(err)
-		http.Error(w, err.Error(), 501)
 		return
-	}
-
-	collection := db.Collection(strings.ToLower(searchReq.Server))
-
-	// Check search criteria from user request and add it to search parameters is defined.
-	var rules bson.D
-
-	// Rule for if the attack or the defender contains the desired player name
-
-	if len(searchReq.PlayerName) > 0 {
-		rules = bson.D{
-			{"$or", bson.A{
-				bson.M{"Attacker.PlayerName": searchReq.PlayerName},
-				bson.M{"Defender.PlayerName": searchReq.PlayerName},
-			}},
+    } else {
+		b, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			log.Fatal(err)
 		}
-	}
 
-	if len(searchReq.Coordinate) > 0 {
-		rules = append(rules, bson.E{"Coordinate", searchReq.Coordinate})
-	}
+		var searchReq SearchRequest
+		err = json.Unmarshal(b, &searchReq)
+		if err != nil {
+			fmt.Println(err)
+			http.Error(w, err.Error(), 501)
+			return
+		}
 
-	rules = append(rules, bson.E{"TotalLoss", bson.D{{"$gt", searchReq.MinTotalLoss}}})
+		collection := db.Collection(strings.ToLower(searchReq.Server))
 
-	opts := options.Find()
-	opts.SetSort(bson.D{{"TotalLoss", -1}})
+		// Check search criteria from user request and add it to search parameters is defined.
+		var rules bson.D
 
-	cursor, err := collection.Find(context.TODO(), rules, opts)
+		// Rule for if the attack or the defender contains the desired player name
 
-	// Decending order based on total fleet loss
-	var reportsSorted []bson.M
-	if err = cursor.All(context.TODO(), &reportsSorted); err != nil {
-		log.Fatal(err)
-	}
+		if len(searchReq.PlayerName) > 0 {
+			rules = bson.D{
+				{"$or", bson.A{
+					bson.M{"Attacker.PlayerName": searchReq.PlayerName},
+					bson.M{"Defender.PlayerName": searchReq.PlayerName},
+				}},
+			}
+		}
 
-	resObj, _ := json.Marshal(reportsSorted)
-	w.Write(resObj)
+		if len(searchReq.Coordinate) > 0 {
+			rules = append(rules, bson.E{"Coordinate", searchReq.Coordinate})
+		}
+
+		rules = append(rules, bson.E{"TotalLoss", bson.D{{"$gt", searchReq.MinTotalLoss}}})
+
+		opts := options.Find()
+		opts.SetSort(bson.D{{"TotalLoss", -1}})
+
+		cursor, err := collection.Find(context.TODO(), rules, opts)
+
+		// Decending order based on total fleet loss
+		var reportsSorted []bson.M
+		if err = cursor.All(context.TODO(), &reportsSorted); err != nil {
+			log.Fatal(err)
+		}
+
+		resObj, _ := json.Marshal(reportsSorted)
+		w.Write(resObj)
 	}
 }
 
