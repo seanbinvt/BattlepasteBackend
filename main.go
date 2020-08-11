@@ -79,7 +79,7 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 	allowOpts(&w)
 
 	if (*r).Method == "OPTIONS" {
-		fmt.Println("here")
+		w.WriteHeader(http.StatusOK)
     } else {
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
