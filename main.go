@@ -158,6 +158,10 @@ func viewBattleReport(w http.ResponseWriter, r *http.Request) {
 
 func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 	allowOpts(&w)
+	if (*r).Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+    } else {
 
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -193,6 +197,7 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(resObj)
+	}
 }
 
 func allowOpts(w *http.ResponseWriter) {
