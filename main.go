@@ -76,9 +76,10 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchBattleReport(w http.ResponseWriter, r *http.Request) {
-	allowOpts(&w)
-
 	if (*r).Method == "OPTIONS" {
+		w.Header().Set("Access-Control-Allow-Origin", "https://seanb.herokuapp.com")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		w.WriteHeader(http.StatusOK)
     } else {
 	b, err := ioutil.ReadAll(r.Body)
