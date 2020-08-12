@@ -16,6 +16,7 @@ import (
 	"github.com/gorilla/mux" // http router used
 
 	// for .env variables compatability
+	"github.com/joho/godotenv"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -45,8 +46,15 @@ type SearchRequest struct {
 //const urlReact = "https://seanb.herokuapp.com/battlepaste"
 
 func main() {
+	environment := "dev"
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+
+	if environment == "dev" {
+		godotenv.Load(".env")
+	}
+
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("ATLAS_URI")))
 
 	if err != nil {
@@ -59,6 +67,8 @@ func main() {
 
 var db *mongo.Database
 
+var environment string = "dev"
+
 func handler() {
 	port := os.Getenv("PORT")
 
@@ -67,6 +77,7 @@ func handler() {
 	r.HandleFunc("/battlereport/submit", submitBattleReport).Methods("POST", "OPTIONS")
 	r.HandleFunc("/battlereport/search", searchBattleReport).Methods("POST", "OPTIONS")
 	log.Fatal(http.ListenAndServe(":"+port, r)) // If error then log to console
+	fmt.Println("Running on port", port)
 }
 
 //https://www.mongodb.com/blog/post/quick-start-golang--mongodb--modeling-documents-with-go-data-structures
@@ -80,7 +91,7 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 	if (*r).Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
 		return
-    } else {
+	} else {
 		b, err := ioutil.ReadAll(r.Body)
 		defer r.Body.Close()
 		if err != nil {
@@ -161,47 +172,47 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 	if (*r).Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
 		return
-    } else {
+	} else {
 
-	b, err := ioutil.ReadAll(r.Body)
-	defer r.Body.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
+		b, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	var report SubmitRequest
-	err = json.Unmarshal(b, &report)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
+		var report SubmitRequest
+		err = json.Unmarshal(b, &report)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
 
-	//report, _ := ioutil.ReadFile("report2.txt")
-	battleReport, parseErr := reportParse.Parse(report.BattlePaste) //reportParse.Parse(r.Header.data)
-	if parseErr {
-		http.Error(w, "Error with parse", 505)
-		return
-	}
+		//report, _ := ioutil.ReadFile("report2.txt")
+		battleReport, parseErr := reportParse.Parse(report.BattlePaste) //reportParse.Parse(r.Header.data)
+		if parseErr {
+			http.Error(w, "Error with parse", 505)
+			return
+		}
 
-	collection := db.Collection(strings.ToLower(battleReport.Server))
+		collection := db.Collection(strings.ToLower(battleReport.Server))
 
-	//ret, _ := json.Marshal(battleReport)
-	id, _ := collection.InsertOne(context.TODO(), battleReport)
-	hexID := (id.InsertedID).(primitive.ObjectID).Hex()
+		//ret, _ := json.Marshal(battleReport)
+		id, _ := collection.InsertOne(context.TODO(), battleReport)
+		hexID := (id.InsertedID).(primitive.ObjectID).Hex()
 
-	var res SubmitResponse
-	res.MongoID = hexID
-	res.Server = battleReport.Server
+		var res SubmitResponse
+		res.MongoID = hexID
+		res.Server = battleReport.Server
 
-	resObj, _ := json.Marshal(res)
+		resObj, _ := json.Marshal(res)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(resObj)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(resObj)
 	}
 }
 
 func allowOpts(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "https://seanb.herokuapp.com")
-    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-    (*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	(*w).Header().Set("Access-Control-Allow-Origin", os.Getenv("FRONTEND"))
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
