@@ -87,7 +87,9 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchBattleReport(w http.ResponseWriter, r *http.Request) {
-	allowOpts(&w)
+	scheme := (*r).Header["Referer"][0][0:5]
+
+	allowOpts(&w, scheme)
 	if (*r).Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
 		return
@@ -145,7 +147,9 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 }
 
 func viewBattleReport(w http.ResponseWriter, r *http.Request) {
-	allowOpts(&w)
+	scheme := (*r).Header["Referer"][0][0:5]
+
+	allowOpts(&w, scheme)
 
 	vars := mux.Vars(r)
 
@@ -168,7 +172,9 @@ func viewBattleReport(w http.ResponseWriter, r *http.Request) {
 }
 
 func submitBattleReport(w http.ResponseWriter, r *http.Request) {
-	allowOpts(&w)
+	scheme := (*r).Header["Referer"][0][0:5]
+
+	allowOpts(&w, scheme)
 	if (*r).Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
 		return
@@ -211,8 +217,13 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func allowOpts(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", os.Getenv("FRONTEND"))
+func allowOpts(w *http.ResponseWriter, ref string) {
+	if ref[4] != 's' {
+		(*w).Header().Set("Access-Control-Allow-Origin", "http://"+os.Getenv("FRONTEND"))
+	} else {
+		(*w).Header().Set("Access-Control-Allow-Origin", "https://"+os.Getenv("FRONTEND"))
+	}
+
 	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
