@@ -215,12 +215,6 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 			"Time":                battleReport.Time}, &opt).Decode(&reportCheck)
 
 		if errR != nil {
-			fmt.Println(errR)
-		}
-		fmt.Println(reportCheck)
-		//if len(reportCheck) == 0 {
-		if reportCheck.Server == "" {
-			//ret, _ := json.Marshal(battleReport)
 			id, _ := collection.InsertOne(context.TODO(), battleReport)
 			hexID := (id.InsertedID).(primitive.ObjectID).Hex()
 

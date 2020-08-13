@@ -119,8 +119,6 @@ func Parse(report string) (BattleReport, bool) {
 }
 
 func checkServers(server string) bool {
-	fmt.Println(server)
-
 	serversv1 := [...]string{"Alpha", "Beta", "Ceti", "Delta", "Epsilon", "Fenix", "Gamma", "Helion", "Ixion", "Juno", "Kappa", "Lyra", "Mira", "Nova", "Omega", "Pegasus", "Quantum", "Rigel", "Sigma", "Typhon", "Utopia"}
 	serversv2 := [...]string{"Andromeda", "Bravo", "Centauri", "Drako", "Elysium", "Frontier", "Gaia", "Hydra", "Iridium", "Jade", "Kepler", "Lynx", "Mystic", "Nexus"}
 	serversv3 := [...]string{"Ares", "Antares"}
@@ -245,7 +243,7 @@ func playerParse(lines []string, lastLine *int) (string, string, float64, string
 			tag = lineAlt[1]
 			name = strings.Join(lineAlt[2:len(lineAlt)-2], " ")
 		} else if !strings.Contains(lines[*lastLine], "United") {
-			name = strings.Join(lineAlt[1:len(lineAlt)-1], " ")
+			name = strings.Join(lineAlt[1:len(lineAlt)-2], " ")
 		}
 		*lastLine++
 	}
