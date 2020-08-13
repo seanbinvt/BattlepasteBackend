@@ -31,7 +31,7 @@ type SubmitRequest struct {
 
 // SubmitResponse - The information responded with when revieving a post submit request.
 type SubmitResponse struct {
-	MongoID string `json:"mongoId"`
+	MongoID string `json:"mongoId" bson:"_id"`
 	Server  string `json:"server"`
 }
 
@@ -147,9 +147,12 @@ func searchBattleReport(w http.ResponseWriter, r *http.Request) {
 }
 
 func viewBattleReport(w http.ResponseWriter, r *http.Request) {
-	scheme := (*r).Header["Referer"][0][0:5]
-
-	allowOpts(&w, scheme)
+	if len((*r).Header["Referer"]) > 0 {
+		scheme := (*r).Header["Referer"][0][0:5]
+		allowOpts(&w, scheme)
+	} else {
+		allowOpts(&w, "")
+	}
 
 	vars := mux.Vars(r)
 
@@ -179,7 +182,6 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		return
 	} else {
-
 		b, err := ioutil.ReadAll(r.Body)
 		defer r.Body.Close()
 		if err != nil {
@@ -202,23 +204,48 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 
 		collection := db.Collection(strings.ToLower(battleReport.Server))
 
-		//ret, _ := json.Marshal(battleReport)
-		id, _ := collection.InsertOne(context.TODO(), battleReport)
-		hexID := (id.InsertedID).(primitive.ObjectID).Hex()
+		var opt options.FindOneOptions
+		opt.SetProjection(bson.M{"_id": 1, "Server": 1})
 
-		var res SubmitResponse
-		res.MongoID = hexID
-		res.Server = battleReport.Server
+		var reportCheck SubmitResponse
+		errR := collection.FindOne(context.TODO(), bson.M{
+			"Attacker.PlayerName": battleReport.Attacker.PlayerName,
+			"Defender.PlayerName": battleReport.Defender.PlayerName,
+			"Date":                battleReport.Date,
+			"Time":                battleReport.Time}, &opt).Decode(&reportCheck)
 
-		resObj, _ := json.Marshal(res)
+		if errR != nil {
+			fmt.Println(errR)
+		}
+		fmt.Println(reportCheck)
+		//if len(reportCheck) == 0 {
+		if reportCheck.Server == "" {
+			//ret, _ := json.Marshal(battleReport)
+			id, _ := collection.InsertOne(context.TODO(), battleReport)
+			hexID := (id.InsertedID).(primitive.ObjectID).Hex()
 
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(resObj)
+			var res SubmitResponse
+			res.MongoID = hexID
+			res.Server = battleReport.Server
+
+			resObj, _ := json.Marshal(res)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(resObj)
+		} else {
+			fmt.Println("duplicate")
+			resObj, _ := json.Marshal(reportCheck)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(resObj)
+		}
 	}
 }
 
 func allowOpts(w *http.ResponseWriter, ref string) {
-	if ref[4] != 's' {
+	if ref == "" {
+		return
+	} else if ref[4] != 's' {
 		(*w).Header().Set("Access-Control-Allow-Origin", "http://"+os.Getenv("FRONTEND"))
 	} else {
 		(*w).Header().Set("Access-Control-Allow-Origin", "https://"+os.Getenv("FRONTEND"))
