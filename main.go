@@ -26,6 +26,7 @@ import (
 
 // SubmitRequest - The information recieved when revieving a post submit request.
 type SubmitRequest struct {
+	Days        int    `json:"days"`
 	BattlePaste string `json:"battlePaste"`
 }
 
@@ -169,9 +170,27 @@ func viewBattleReport(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+	now := time.Now()
+	if now.Before(report.TechDate) {
+		hideTechs(&report)
+	}
 
 	resObj, _ := json.Marshal(report)
 	w.Write(resObj)
+}
+
+func hideTechs(r *reportParse.BattleReport) {
+	for i, _ := range (*r).AttackerUnits {
+		(*r).AttackerUnits[i].Power = 0
+		(*r).AttackerUnits[i].Armour = 0
+		(*r).AttackerUnits[i].Shield = 0
+	}
+
+	for i, _ := range (*r).DefenderUnits {
+		(*r).DefenderUnits[i].Power = 0
+		(*r).DefenderUnits[i].Armour = 0
+		(*r).DefenderUnits[i].Shield = 0
+	}
 }
 
 func submitBattleReport(w http.ResponseWriter, r *http.Request) {
@@ -215,6 +234,15 @@ func submitBattleReport(w http.ResponseWriter, r *http.Request) {
 			"Time":                battleReport.Time}, &opt).Decode(&reportCheck)
 
 		if errR != nil {
+			date := time.Now()
+
+			fmt.Println(date)
+			fmt.Println(report.Days)
+
+			battleReport.TechDate = date.AddDate(0, 0, report.Days)
+
+			fmt.Println(battleReport.TechDate)
+
 			id, _ := collection.InsertOne(context.TODO(), battleReport)
 			hexID := (id.InsertedID).(primitive.ObjectID).Hex()
 

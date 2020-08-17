@@ -5,6 +5,7 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"time"
 )
 
 //PlayerInfo - Information for a player within a battle report
@@ -60,6 +61,8 @@ type BattleReport struct {
 	BasePillaged    bool   `bson:"BasePillaged"`    // if the attacked base was successfully pillaged
 	BasePillage     uint32 `bson:"BasePillage"`     //  pillage #
 	CommanderKilled bool   `bson:"CommanderKilled"` // If the commander of the base was killed
+
+	TechDate time.Time `bson:"TechDate` // The date where the tech is unlocked for viewing
 }
 
 /*Parse
