@@ -124,7 +124,7 @@ func Parse(report string) (BattleReport, bool) {
 func checkServers(server string) bool {
 	serversv1 := [...]string{"Alpha", "Beta", "Ceti", "Delta", "Epsilon", "Fenix", "Gamma", "Helion", "Ixion", "Juno", "Kappa", "Lyra", "Mira", "Nova", "Omega", "Pegasus", "Quantum", "Rigel", "Sigma", "Typhon", "Utopia"}
 	serversv2 := [...]string{"Andromeda", "Bravo", "Centauri", "Drako", "Elysium", "Frontier", "Gaia", "Hydra", "Iridium", "Jade", "Kepler", "Lynx", "Mystic", "Nexus"}
-	serversv3 := [...]string{"Ares", "Antares"}
+	serversv3 := [...]string{"Ares", "Antares", "Babylon"}
 
 	for _, s := range serversv1 {
 		if server == strings.ToLower(s) {
@@ -282,10 +282,11 @@ func getHeader(finalReport *BattleReport, reportAlt []string, lastIndex *int) bo
 	*lastIndex++
 
 	// GET SERVER NAME
-	finalReport.Server = strings.ToLower(strings.Fields(reportAlt[*lastIndex])[1])
+	serverLower := strings.ToLower(strings.Fields(reportAlt[*lastIndex])[1])
+	finalReport.Server = strings.ToUpper(string(serverLower[0])) + serverLower[1:len(serverLower)]
 	*lastIndex += 2
 
-	return checkServers(finalReport.Server)
+	return checkServers(serverLower)
 }
 
 func getAttackerInformation(finalReport *BattleReport, reportAlt []string, lastIndex *int, commandChecked *bool) {
