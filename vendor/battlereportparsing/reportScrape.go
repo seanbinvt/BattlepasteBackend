@@ -62,7 +62,7 @@ type BattleReport struct {
 	BasePillage     uint32 `bson:"BasePillage"`     //  pillage #
 	CommanderKilled bool   `bson:"CommanderKilled"` // If the commander of the base was killed
 
-	TechDate time.Time `bson:"TechDate` // The date where the tech is unlocked for viewing
+	TechDate time.Time `bson:"TechDate"` // The date where the tech is unlocked for viewing
 }
 
 /*Parse
